@@ -14,8 +14,13 @@ namespace RGB_API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection") ?? 
-                Environment.GetEnvironmentVariable("DefaultConnection"));
+            var a = configuration.GetConnectionString("DefaultConnection");
+            var b = Environment.GetEnvironmentVariable("DefaultConnection");
+            Console.WriteLine("==============");
+            Console.WriteLine(a);
+            Console.WriteLine(b);
+            Console.WriteLine(a ?? b);
+            optionsBuilder.UseNpgsql(a ?? b);
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Color> Colors { get; set; }

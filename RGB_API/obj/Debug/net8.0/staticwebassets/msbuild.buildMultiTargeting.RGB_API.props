@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RGB_API.props" />
+</Project>

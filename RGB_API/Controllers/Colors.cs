@@ -76,8 +76,23 @@ namespace RGB_API.Controllers
         // POST: api/Colors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Color>> PostColor(Color color)
+        public async Task<ActionResult<Color>> PostColor(ColorDTO colorDTO)
         {
+            var creator = await _context.Users.FindAsync(colorDTO.CreatorId);
+            if (creator == null)
+            {
+                return NotFound("Creator not found");
+            }
+            var color = new Color()
+            {
+                Creator = creator,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                Red = colorDTO.Red,
+                Green = colorDTO.Green,
+                Blue = colorDTO.Blue,
+            };
+
             _context.Colors.Add(color);
             await _context.SaveChangesAsync();
 

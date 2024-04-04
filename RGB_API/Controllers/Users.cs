@@ -23,9 +23,16 @@ namespace RGB_API.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            var userDTOs = new List<UserDTO>();
+            for (int i = 0; i < users.Count(); i++)
+            {
+                var userDTO = new UserDTO() { Id = users[i].Id, Username = users[i].Username };
+                userDTOs.Add(userDTO);
+            }
+            return userDTOs;
         }
 
         // GET: api/Users/5
